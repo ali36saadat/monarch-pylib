@@ -1,5 +1,5 @@
 import unittest
-from core.utils import check_dependencies
+from monarch_pylib.utils import check_dependencies
 
 
 class TestUtils(unittest.TestCase):
