@@ -19,3 +19,7 @@ build/
 .venv/
 
 venv/
+
+PUBLISH.txt
+
+*.ps1
