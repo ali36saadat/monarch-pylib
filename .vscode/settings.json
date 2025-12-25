@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./monarch_pylib/modules"
+    ]
+}
