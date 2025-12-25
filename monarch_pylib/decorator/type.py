@@ -3,7 +3,6 @@ from typing import get_type_hints, get_origin, get_args
 from functools import wraps
 import inspect
 import numbers
-import numpy as np
 
 
 def _is_instance(val, tp) -> bool:
@@ -11,7 +10,7 @@ def _is_instance(val, tp) -> bool:
     Minimal runtime type checker:
     - supports Union/Optional
     - supports basic list/tuple container checks (shallow)
-    - treats float as (int/float/numpy floating) if you want numeric-friendly behavior
+    - treats float as (int/float) if you want numeric-friendly behavior
     """
     origin = get_origin(tp)
     args = get_args(tp)
@@ -29,13 +28,9 @@ def _is_instance(val, tp) -> bool:
 
     if origin is None:
         if tp is float:
-            return isinstance(val, (numbers.Real, np.floating)) and not isinstance(
-                val, bool
-            )
+            return isinstance(val, numbers.Real) and not isinstance(val, bool)
         if tp is int:
-            return isinstance(val, (numbers.Integral, np.integer)) and not isinstance(
-                val, bool
-            )
+            return isinstance(val, numbers.Integral) and not isinstance(val, bool)
         if tp is bool:
             return isinstance(val, bool)
         return isinstance(val, tp)
@@ -94,9 +89,7 @@ def type_decorator(dc_type, return_type):
             out = fn(*args, **kwargs)
 
             if return_type is float:
-                if not isinstance(out, (numbers.Real, np.floating)) or isinstance(
-                    out, bool
-                ):
+                if not isinstance(out, numbers.Real) or isinstance(out, bool):
                     raise TypeError("return must be float-like")
                 return float(out)
 
